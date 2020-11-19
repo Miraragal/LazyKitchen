@@ -16,7 +16,7 @@ router.get("/", auth.verifyUser, auth.veryAdmin, (req, res, next) => {
     .catch((err) => next(err));
 });
 //SignUp
-//CreateAdmin
+
 //Login
 route.get(
   "/facebook/token",

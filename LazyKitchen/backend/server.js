@@ -25,25 +25,10 @@ mongoose
 
 var app = express();
 
-//Secure traffinc ONLY
-app.all("*", (req, res, next) => {
-  if (req.secure) {
-    return next();
-  } else {
-    console.log(
-      `Redirecting to: https://${req.hostname}:${app.get("secPort")}${req.url}`
-    );
-    res.redirect(
-      config.PORT,
-      `https://${req.hostname}:${app.get("secPort")}${req.url}`
-    );
-  }
-});
-//
-  app.listen(config.PORT, () => {
-    console.log('Server started at http://localhost:3000');
-  });
 
+app.listen(config.PORT, () => {
+    console.log('Server started at http://localhost:3001');
+});
 //Middlewares
 app.use(express.json());
 app.use(passport.initialize());

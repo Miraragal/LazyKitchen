@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export default {
-  PORT: process.env.PORT || 3000,
+  PORT: process.env.PORT || 3001,
   MONGODB_URL: process.env.MONGODB_URL || 'mongodb://localhost/lazyKitchen',
   facebookClientId: process.env.facebookClientId || 'facebookClientId',
   facebookClientSecret: process.env.facebookClientSecret || 'facebookClientSecret',

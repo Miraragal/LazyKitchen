@@ -1,8 +1,10 @@
-const { config } = require("dotenv/types");
+const { config } = require("dotenv");
 const User = require("./models/userModel");
 var passport = require("passport"),
   FacebookStrategy = require("passport-facebook").Strategy;
- 
+
+//Auth- Passport+JWT
+
 
 //OAuth2-Facebook
 exports.facebookPassport = passport.use(
@@ -10,7 +12,7 @@ exports.facebookPassport = passport.use(
     {
       clientID: config.facebookClientId,
       clientSecret: config.facebookClientSecret,
-      callbackURL: "http://localhost:3000//facebook/token"
+      callbackURL: "http://localhost:3000/"
 
     },
     function (accessToken, refreshToken, profile, done) {
