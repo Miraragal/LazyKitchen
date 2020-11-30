@@ -1,19 +1,27 @@
 const { config } = require("dotenv");
 const User = require("./models/userModel");
 var passport = require("passport"),
+  LocalStrategy = require("passport-local").Strategy,
   FacebookStrategy = require("passport-facebook").Strategy,
   JwtStrategy = require("passport-jwt").Strategy,
-  ExtractJwt = require("passport-jwt").ExtractJwt,
-  LocalStrategy = require("passport-local").Strategy;
+  ExtractJwt = require("passport-jwt").ExtractJwt;
 const jwt = require("jsonwebtoken");
 
 //Auth- Passport+JWT
+exports.localPassport = passport.use(new LocalStrategy(User.authenticate()));
 
-exports.local = passport.use(new LocalStrategy(User.authenticate()));
+exports.getToken = (user)=>{
+  return jwt.sign({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+  },  config.JWT_SECRET, {expiresIn:43200}) //12h
+}
 
 var opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.secretOrKey = config.secretKey;
+opts.secretOrKey = config.JWT_SECRET;
 
 exports.jwtPassport = passport.use(
   new JwtStrategy(opts, function (jwt_payload, done) {

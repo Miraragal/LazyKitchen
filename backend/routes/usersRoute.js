@@ -18,6 +18,9 @@ router.get("/", auth.verifyUser, auth.veryAdmin, (req, res, next) => {
 //SignUp
 
 //Login
+router.post('/login', )
+
+
 route.get(
   "/facebook/token",
   passport.authenticate("facebook-token"),
