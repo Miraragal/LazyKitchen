@@ -8,5 +8,5 @@ export default {
   facebookClientId: process.env.facebookClientId || 'facebookClientId',
   facebookClientSecret: process.env.facebookClientSecret || 'facebookClientSecret',
   //accessKeyId: process.env.accessKeyId || 'accessKeyId',
-  //secretAccessKey: process.env.secretAccessKey || 'secretAccessKey',
+  secretAccessKey: process.env.secretAccessKey || 'secretAccessKey',
 };
