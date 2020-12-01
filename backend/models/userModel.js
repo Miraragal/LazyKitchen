@@ -7,7 +7,7 @@ const userSchema= new Schema ({
     name:{type: String, required: true},
     lastname:{type: String, required: true},
     email:{type: String, required: true, unique:true, dropDups:true},
-    isAdmin:{type: Boolean, required:true, default: false}
+    isAdmin:{type: Boolean, default: false}
 })
 
 

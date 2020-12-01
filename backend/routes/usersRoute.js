@@ -26,7 +26,7 @@ route.get(
   passport.authenticate("facebook-token"),
   (req, res) => {
     if (req.user) {
-      //const token = authenticate.getToken({ _id: req.user._id });
+      const token = auth.getToken({ _id: req.user._id });
       res.statusCode = 200;
       res.setHeader("Content-Type", "application/json");
       res.json({

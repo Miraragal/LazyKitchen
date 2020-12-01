@@ -6,10 +6,16 @@ var passport = require("passport"),
   JwtStrategy = require("passport-jwt").Strategy,
   ExtractJwt = require("passport-jwt").ExtractJwt;
 const jwt = require("jsonwebtoken");
+const { serializeUser } = require("passport");
 
 //Auth- Passport+JWT
 exports.localPassport = passport.use(new LocalStrategy(User.authenticate()));
 
+/* Serialize user session*/
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+/* Get Jason Web Token*/
 exports.getToken = (user)=>{
   return jwt.sign({
       _id: user._id,
@@ -18,7 +24,7 @@ exports.getToken = (user)=>{
       isAdmin: user.isAdmin,
   },  config.JWT_SECRET, {expiresIn:43200}) //12h
 }
-
+/* */
 var opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = config.JWT_SECRET;
@@ -34,11 +40,12 @@ exports.jwtPassport = passport.use(
         return done(null, user);
       } else {
         return done(null, false);
-        // or you could create a new account
+        // or create a new account
       }
     });
   })
 );
+
 //OAuth2-Facebook
 exports.facebookPassport = passport.use(
   new FacebookStrategy(
@@ -73,7 +80,9 @@ exports.facebookPassport = passport.use(
   )
 );
 
+
 exports.verifyUser = passport.authenticate("facebook-token");
+//exports.verifyUser = passport.authenticate("jwt", { session: false });
 
 exports.verifyAdmin = (req, res, next) => {
   if (req.user.admin) {
