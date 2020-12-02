@@ -1,20 +1,20 @@
 var express = require("express");
+var passport = require("passport");
 var router = express.Router();
 const User = require("../models/userModel");
 const auth = require("../auth");
-const { route } = require("../server");
 // Middleware CORS-- control de acceso en los navigadore. Definimos solicitudes desde http de origen cruzado
 
-// Get User Listing
-router.get("/", auth.verifyUser, auth.veryAdmin, (req, res, next) => {
-  User.find()
-    .then((user) => {
-      res.statusCode = 200;
-      res.setHeader("Content-Type", "application/json");
-      res.json(user);
-    })
-    .catch((err) => next(err));
-});
+// // Get User Listing
+// router.get("/", auth.verifyUser, auth.veryAdmin, (req, res, next) => {
+//   User.find()
+//     .then((user) => {
+//       res.statusCode = 200;
+//       res.setHeader("Content-Type", "application/json");
+//       res.json(user);
+//     })
+//     .catch((err) => next(err));
+// });
 
 //SignUp
 router.post("signup", (req, res) => {
@@ -67,7 +67,7 @@ router.post("/login", passport.authenticate("local"), (req, res) => {
   });
 });
 
-route.get(
+router.get(
   "/facebook/token",
   passport.authenticate("facebook-token"),
   (req, res) => {
@@ -84,7 +84,7 @@ route.get(
   }
 );
 //User Updates
-route.put("/:userId", auth.verifyUser, (req, res, next) => {
+router.put("/:userId", auth.verifyUser, (req, res, next) => {
   User.findById(req.params.id)
     .then((user) => {
       if (user) {
@@ -103,7 +103,7 @@ route.put("/:userId", auth.verifyUser, (req, res, next) => {
 });
 
 //Logout
-route.get("logout", (req, res, next) => {
+router.get("logout", (req, res, next) => {
   if (req.session) {
     req.session.destroy("Content-Type", "application/json");
     res.redirect("/");
@@ -113,3 +113,5 @@ route.get("logout", (req, res, next) => {
     return next(err);
   }
 });
+
+module.exports = router;

@@ -1,15 +1,16 @@
 var express = require("express");
 var createError = require("http-errors");
+var path = require("path");
 var mongoose = require("mongoose");
 //var logger = require("morgan");
 var passport = require("passport");
 var config = require("./config");
-var indexRoute = require("./routes/indexRoute");
+var indexRoute = require("./routes/welcomeRoute");
 var usersRoute = require("./routes/usersRoute");
 var recipesRoute = require("./routes/recipesRoute");
 var shopListRoute = require("./routes/recipesRoute");
 var uploadRoute = require("./routes/uploadRoute");
-
+require("dotenv").config();
 
 //Access to mongoDB
 const mongodbUrl = config.MONGODB_URL;
@@ -25,18 +26,18 @@ mongoose
 
 var app = express();
 
+// View engine setup 
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "jade");
 
-app.listen(config.PORT, () => {
-    console.log('Server started at http://localhost:3001');
-});
 //Middlewares
 app.use(express.json());
 app.use(passport.initialize());
 app.use("/", indexRoute);
 app.use("/users", usersRoute);
-app.use("/recipes", recipesRoute);
-app.use("imageUpload", uploadRoute);
-app.use("/shopping-list", shopListRoute);
+// app.use("/recipes", recipesRoute);
+// app.use("imageUpload", uploadRoute);
+// app.use("/shopping-list", shopListRoute);
 
 //404 + Error handlers
 app.use(function (req, res, nest) {
@@ -50,4 +51,10 @@ app.use(function (err, req, res){
     res.render("error");
 });
 
-module.exports = app;
+app.listen(config.PORT, () => {
+  console.log('Server started at http://localhost:3001');
+});
+
+
+
+

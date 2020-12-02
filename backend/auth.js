@@ -12,11 +12,11 @@ const { serializeUser } = require("passport");
 //Auth- Passport+JWT
 exports.localPassport = passport.use(new LocalStrategy(User.authenticate()));
 
-/* Serialize user session*/
+/* Serialize user session */
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-/* Get Jason Web Token*/
+/* Get Jason Web Token */
 exports.getToken = (user) => {
   return jwt.sign(
     {
@@ -29,8 +29,7 @@ exports.getToken = (user) => {
     { expiresIn: 43200 }
   ); //12h
 };
-/* */
-//opts.secretOrKey = config.JWT_SECRET;
+/* JWT */
 require("dotenv").config();
 const jwtOpts = {};
 jwtOpts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
