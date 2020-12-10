@@ -1,15 +1,19 @@
 import React from "react";
-import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 
 
-class Main extends React.Component{
-render(){
-    return(
-    <div className="container-fluid">
-        <img src="/images/spices.jpg" alt="Landing" />
-    </div>
-    )
-}
+class Main extends React.Component {
+  render() {
+    return (
+      <div className="container-fluid">
+          <div className='row'>
+              <div className='col'>
+
+              </div>
+          </div>
+     
+      </div>
+    );
+  }
 }
 
 export default Main;

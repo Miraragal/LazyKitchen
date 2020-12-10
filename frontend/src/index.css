@@ -6,7 +6,7 @@ body {
   font: 1.6rem Verdana;
   height: 100vh;
   margin: 0;
-  background-image: linear-gradient(#c0b0a8d0, white);
+  background-image:linear-gradient( #c0b0a8d0,white);
   overflow: hidden;
 }
 #root {
@@ -14,10 +14,15 @@ body {
 }
 
 .container-fluid {
-  /* background-image: url("logo192.png"); */
-  height: 750px;
-  background-repeat: no-repeat;
-  background-position: center;
+  border-radius: 30px;
+  margin: 10vh 2vh 0vh 2vh;
+  border: 1px ridge;
+  padding: 15vh;
+  height: 50vh; 
+  background-image: url("./images/spices.jpg");
   background-size: cover;
-  position: relative;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  
 }
