@@ -1,5 +1,6 @@
 import React from "react";
-
+import Login from './SignIn.js';
+import  Explore from './Explore.js';
 
 class Main extends React.Component {
   render() {
@@ -7,7 +8,8 @@ class Main extends React.Component {
       <div className="container-fluid">
           <div className='row'>
               <div className='col'>
-
+                <Login />
+                <Explore /> 
               </div>
           </div>
      
