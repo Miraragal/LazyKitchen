@@ -13,12 +13,12 @@ import {
 class Login extends React.Component {
   render() {
     return (
-      <div id="formLogin">
-        <FormGroup>
+      <div className="container">
+        <FormGroup id="formLogin">
           <h1>Login</h1>
           <InputGroup>
             <InputGroup.Prepend>
-              <FontAwesomeIcon icon={faUser} size="md" id="loginLabels" />
+              <FontAwesomeIcon icon={faUser} size="md" id="loginLabels" />{' '}
               <FormLabel for="username" id="loginLabels">
                 Username
               </FormLabel>
@@ -35,7 +35,7 @@ class Login extends React.Component {
           </InputGroup>
           <InputGroup>
             <InputGroup.Prepend>
-                <FontAwesomeIcon icon={faLock} size="md" id="loginLabels" />
+                <FontAwesomeIcon icon={faLock} size="md" id="loginLabels" />{' '}
               <FormLabel for="username" id="loginLabels">
                 Password
               </FormLabel>

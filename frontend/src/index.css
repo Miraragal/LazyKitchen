@@ -24,23 +24,30 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-  background-attachment: fixed;
+
+}
+
+.container {
+  border: 1px inset;
+  border-radius: 30px;  
+  background-image: linear-gradient(#e7e0e0, #ffffff);
+  width: 40% !important;
+  height: 50vh !important;
+  padding: 1vh; 
+  float: left;
+  margin: 0% 1% 1% 5%;
 }
 
 #formLogin{
-  background-color: #ffffff;
   font-family: 'Varela Round', sans-serif;
   color:#3a1b0e;
-  border: 1px inset;
-  border-radius: 30px;
-  width: 40%;
-  margin: 1vh;
-  padding: 2vh;
   text-align: center;
+  margin: 1vh;
+  padding: 1vh;  
 }
 #loginLabels{
   color: #3a1b0ece;
-  font-size: 15px;
+  font-size: 16px;
   padding-bottom: 2px;
 }
 #inputs{
@@ -61,14 +68,28 @@ body {
 }
 #loginButton{
   color: #ffffff;
-  padding: 2%;
+  padding: 4%;
   min-width: 60%;
   border: 1px;
   border-radius: 30px;
   background-image: linear-gradient(#6436c1,rgba(170, 149, 228, 0.89)) !important;
 }
+p{
+  margin-top:15%;
+  font-size: 12px !important;
+}
 #facebookButton{
   font-size: 30px;
-  margin: 1%;
+  margin: 3%;
   padding: 1%;
 }
+img {
+  position: relative;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: fit-content;
+  overflow: hidden;
+  border-radius: 30px;
+}
+  
