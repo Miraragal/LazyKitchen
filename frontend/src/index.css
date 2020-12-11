@@ -34,7 +34,6 @@ body {
   float: left !important;
   flex: 1; /* additionally, equal width */
   margin: 0% 2% 0% 1% ;
-
 }
 .row {
   display: flex; /* equal height of the children */
@@ -78,6 +77,11 @@ body {
   border-radius: 30px;
   background-image: linear-gradient(#6436c1,rgba(170, 149, 228, 0.89)) !important;
 }
+
+a{
+  text-decoration:none;
+  color:#ffffff ;
+}
 p{
   margin-top:10%;
   font-size: 12px !important;
@@ -91,9 +95,9 @@ img {
   position: relative;
   top: 0;
   bottom: 0;
-  width: 100%;
+  width: 80%;
   height: fit-content;
   overflow: hidden;
-  border-radius: 30px;
+  
 }
   
