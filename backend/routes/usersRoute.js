@@ -3,18 +3,6 @@ var passport = require("passport");
 var router = express.Router();
 const User = require("../models/userModel");
 const auth = require("../auth");
-// Middleware CORS-- control de acceso en los navigadore. Definimos solicitudes desde http de origen cruzado
-
-// // Get User Listing
-// router.get("/", auth.verifyUser, auth.veryAdmin, (req, res, next) => {
-//   User.find()
-//     .then((user) => {
-//       res.statusCode = 200;
-//       res.setHeader("Content-Type", "application/json");
-//       res.json(user);
-//     })
-//     .catch((err) => next(err));
-// });
 
 //SignUp
 router.post("signup", (req, res) => {
@@ -67,12 +55,33 @@ router.post("/login", passport.authenticate("local"), (req, res) => {
   });
 });
 
+// This custom middleware allows us to attach the socket id to the session.
+// With the socket id attached we can send back the right user info to
+// the right socket
+const addSocketIdtoSession = (req, res, next) => {
+  req.session.socketId = req.query.socketId;
+  next();
+};
+// Routes that are triggered by the React client
 router.get(
-  "/facebook/token",
-  passport.authenticate("facebook-token"),
+  "/facebook",
+  addSocketIdtoSession,
+  passport.authenticate("facebook")
+);
+// Routes that are triggered by callbacks from OAuth providers once the user has authenticated successfully
+router.get(
+  "/facebook/callback",
+  passport.authenticate("facebook"),
   (req, res) => {
     if (req.user) {
       const token = auth.getToken({ _id: req.user._id });
+      const io = req.app.get('io')
+      const { givenName, familyName } = req.user.name
+      const user = { 
+        name: `${givenName} ${familyName}`,
+        photo: req.user.photos[0].value
+      }
+      io.in(req.session.socketId).emit('facebook', user)
       res.statusCode = 200;
       res.setHeader("Content-Type", "application/json");
       res.json({
@@ -80,9 +89,18 @@ router.get(
         token: token,
         status: "You are successfully logged in!",
       });
-    }
-  }
+  }}
 );
+// google = (req, res) => {
+//   const io = req.app.get('io')
+//   const user = { 
+//     name: req.user.displayName,
+//     photo: req.user.photos[0].value.replace(/sz=50/gi, 'sz=250')
+//   }
+//   io.in(req.session.socketId).emit('google', user)
+// }
+
+
 //User Updates
 router.put("/:userId", auth.verifyUser, (req, res, next) => {
   User.findById(req.params.id)

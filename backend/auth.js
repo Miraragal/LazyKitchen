@@ -3,6 +3,7 @@ const config = require("./config.js");
 const User = require("./models/userModel");
 var passport = require("passport"),
   LocalStrategy = require("passport-local").Strategy,
+  GoogleStrategy= require("passport-google-oauth").OAuth2Strategy,
   FacebookStrategy = require("passport-facebook").Strategy,
   JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
@@ -13,8 +14,10 @@ const { serializeUser } = require("passport");
 exports.localPassport = passport.use(new LocalStrategy(User.authenticate()));
 
 /* Serialize user session */
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+// passport.serializeUser(User.serializeUser());
+// passport.deserializeUser(User.deserializeUser());
+passport.serializeUser((user, cb) => cb(null, user));
+passport.deserializeUser((obj, cb) => cb(null, obj));
 
 /* Get Jason Web Token */
 exports.getToken = (user) => {
@@ -54,6 +57,7 @@ exports.jwtPassport = (passport) => {
   );
 };
 
+
 //OAuth2-Facebook
 exports.facebookPassport = (passport) => {
   passport.use(
@@ -90,6 +94,43 @@ exports.facebookPassport = (passport) => {
   );
 };
 
+//OAuth2-Google
+exports.googlePassport = (passport) => {
+  passport.use(
+    new GoogleStrategy(
+      {
+        clientID: config.googleClientId,
+        clientSecret: config.googleClientSecret,
+        callbackURL: "http://localhost:3000/",
+      },
+      function (accessToken, refreshToken, profile, done) {
+        User.findorCreate({ googleId: profile.id }, function (err, user) {
+          if (err) {
+            return done(err);
+          }
+          if (!err & user) {
+            done(null, user);
+          } else {
+            user = new User({ username: profile.displayName });
+            user.googleId = profile.Id;
+            user.name = profile.name.givenName;
+            user.lastname = profile.name.familyName;
+            user.email = profile.email;
+            user.save((err, user) => {
+              if (err) {
+                return done(err, false);
+              } else {
+                return done(null, user);
+              }
+            });
+          }
+        });
+      }
+    )
+  );
+};
+
+
 exports.verifyUser = passport.authenticate("facebook-token");
 //exports.verifyUser = passport.authenticate("jwt", { session: false });
 
@@ -101,3 +142,6 @@ exports.verifyAdmin = (req, res, next) => {
     next(err);
   }
 };
+
+
+
