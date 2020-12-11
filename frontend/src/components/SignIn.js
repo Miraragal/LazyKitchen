@@ -13,7 +13,7 @@ import {
 class Login extends React.Component {
   render() {
     return (
-      <div className="container">
+      <div >
         <FormGroup id="formLogin">
           <h1>Login</h1>
           <InputGroup>
@@ -57,8 +57,8 @@ class Login extends React.Component {
             LOGIN
           </Button>
           <p id="loginLabels">Or Sign up Using</p>
-          <FontAwesomeIcon icon={faFacebook} size='lg' id="facebookButton" />
-          <FontAwesomeIcon icon={faGoogle} size='lg' id="facebookButton" />
+          <FontAwesomeIcon icon={faFacebook} size='xl' id="facebookButton" />
+          <FontAwesomeIcon icon={faGoogle} size='xl' id="facebookButton" />
         </FormGroup>
       </div>
     );
