@@ -9,7 +9,7 @@ import {
   FormLabel,
 } from "react-bootstrap";
 import OAuth from "./OAuth";
-import io from "socket.io";
+import io from "socket.io-client";
 
 //SOCIALMEDIA LOGIN
 const socket = io("http://localhost:3001");
